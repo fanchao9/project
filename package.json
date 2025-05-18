@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@balldontlie/sdk": "^1.2.2",
     "@trpc/client": "^11.1.2",
     "@trpc/react-query": "^11.1.2",
     "@trpc/server": "^11.1.2",
