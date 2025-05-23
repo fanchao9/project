@@ -1,26 +1,40 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from nba_api.stats.endpoints import playergamelog
-from nba_api.stats.static import players
+# from fastapi import FastAPI
+# from fastapi.middleware.cors import CORSMiddleware
+# from nba_api.stats.endpoints import playergamelog
+# from nba_api.stats.static import players
 
-app = FastAPI()
+# app = FastAPI()
 
 # Allow your Next.js frontend to call this backend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Or restrict to your Next.js domain
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # Or restrict to your Next.js domain
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
-@app.get("/gamelogs")
-def get_gamelogs(name: str = "LeBron James", season: str = "2024"):
-    player = [p for p in players.get_players() if p["full_name"] == name]
-    if not player:
-        return {"error": "Player not found"}
+# @app.get("/gamelogs")
+# def get_gamelogs(name: str = "LeBron James", season: str = "2024"):
+#     player = [p for p in players.get_players() if p["full_name"] == name]
+#     if not player:
+#         return {"error": "Player not found"}
 
-    player_id = player[0]["id"]
-    gamelog = playergamelog.PlayerGameLog(player_id=player_id, season=season, season_type_all_star="Regular Season")
-    df = gamelog.get_data_frames()[0]
+#     player_id = player[0]["id"]
+#     gamelog = playergamelog.PlayerGameLog(player_id=player_id, season=season, season_type_all_star="Regular Season")
+#     df = gamelog.get_data_frames()[0]
 
-    return df[["GAME_DATE", "MATCHUP", "PTS", "REB", "AST"]].head(10).to_dict(orient="records")
+#     return df[["GAME_DATE", "MATCHUP", "PTS", "REB", "AST"]].head(10).to_dict(orient="records")
+
+
+import mysql.connector
+
+try:
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="H7c654gh!"
+    )
+    print("✅ Connected successfully!")
+    conn.close()
+except mysql.connector.Error as err:
+    print(f"❌ Error: {err}")

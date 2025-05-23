@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { player_id: string } }) {
-  const playerId = parseInt(params.player_id);
+  const playerId = await parseInt(params.player_id);
 
   if (isNaN(playerId)) {
     return NextResponse.json({ error: 'Invalid player ID' }, { status: 400 });
@@ -11,6 +11,7 @@ export async function GET(request: Request, { params }: { params: { player_id: s
   const player = await prisma.player_list.findUnique({
     where: { player_id: playerId },
     include: { game_stats: true },
+    
   });
 
   if (!player) {
